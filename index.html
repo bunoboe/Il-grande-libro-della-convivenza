@@ -80,6 +80,7 @@
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mese</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo di Uscita</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Importo (€)</th>
@@ -88,7 +89,7 @@
                 </thead>
                 <tbody id="expensesTableBody" class="bg-white divide-y divide-gray-200">
                     <tr id="noDataRow" class="text-center text-gray-500 italic">
-                        <td colspan="5" class="px-4 py-4">Nessuna spesa inserita per questo mese.</td>
+                        <td colspan="6" class="px-4 py-4">Nessuna spesa inserita per questo mese.</td>
                     </tr>
                 </tbody>
             </table>
@@ -238,6 +239,7 @@
                         row.className = 'hover:bg-gray-50 transition duration-150 ease-in-out';
                         row.innerHTML = `
                             <td class="px-4 py-3 whitespace-nowrap">${monthNames[Number(exp.month.split('-')[1]) - 1]} ${exp.month.split('-')[0]}</td>
+                            <td class="px-4 py-3 whitespace-nowrap">${exp.date || 'N/A'}</td>
                             <td class="px-4 py-3 whitespace-nowrap">${exp.name}</td>
                             <td class="px-4 py-3">${exp.type}</td>
                             <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">€${exp.amount.toFixed(2)}</td>
@@ -262,6 +264,7 @@
                     name: document.getElementById('name').value,
                     type: document.getElementById('type').value,
                     amount: parseFloat(document.getElementById('amount').value),
+                    date: new Date().toLocaleString('it-IT') // Aggiungi la data e ora dell'inserimento
                 };
                 expenses.push(newExpense);
                 saveExpenses();
