@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accesso Riservato</title>
+    <title>Accesso Riservato - Il grande libro della Convivenza</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
+            color: #1f2937;
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="flex items-center justify-center min-h-screen p-4 sm:p-8">
 
     <div id="login-container" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Accedi</h1>
@@ -31,102 +32,20 @@
         <p id="error-message" class="text-center text-sm text-red-500 mt-4 hidden">Nome utente o password errati.</p>
     </div>
 
-    <!-- Questo è il contenuto che sarà visibile solo dopo il login -->
-    <div id="app-content" class="hidden bg-white p-8 rounded-xl shadow-lg max-w-2xl mx-auto w-full text-center">
-        <h2 class="text-3xl font-bold text-green-600 mb-4">Benvenuto!</h2>
-        <p class="text-gray-700">Questo è il contenuto riservato che solo gli utenti autorizzati possono vedere.</p>
-        <button id="logout-button" class="mt-6 py-2 px-4 rounded-md shadow-sm text-sm font-medium text-white bg-gray-500 hover:bg-gray-600 transition duration-150 ease-in-out">Esci</button>
-    </div>
+    <div id="app-container" class="hidden w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-gray-200">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl sm:text-4xl font-bold text-center text-indigo-800">Il grande libro della Convivenza</h1>
+            <button id="logout-button" class="py-2 px-4 rounded-md shadow-sm text-sm font-medium text-white bg-gray-500 hover:bg-gray-600 transition duration-150 ease-in-out">Esci</button>
+        </div>
+        <p class="text-center text-lg text-gray-600 mb-8">Traccia le uscite mensili per Sara e Giovanni. 💰</p>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const users = {
-                'Illuminatibunoni': 'Illunoni'
-            };
-
-            const usernameInput = document.getElementById('username');
-            const passwordInput = document.getElementById('password');
-            const loginButton = document.getElementById('login-button');
-            const logoutButton = document.getElementById('logout-button');
-            const loginContainer = document.getElementById('login-container');
-            const appContent = document.getElementById('app-content');
-            const errorMessage = document.getElementById('error-message');
-
-            // Funzione per mostrare il contenuto dell'app
-            function showAppContent() {
-                loginContainer.classList.add('hidden');
-                appContent.classList.remove('hidden');
-            }
-
-            // Funzione per mostrare il form di login
-            function showLogin() {
-                appContent.classList.add('hidden');
-                loginContainer.classList.remove('hidden');
-                errorMessage.classList.add('hidden');
-                usernameInput.value = '';
-                passwordInput.value = '';
-                usernameInput.focus();
-            }
-
-            // Funzione per gestire il login
-            function handleLogin() {
-                const username = usernameInput.value;
-                const password = passwordInput.value;
-
-                if (users[username] === password) {
-                    showAppContent();
-                } else {
-                    errorMessage.classList.remove('hidden');
-                }
-            }
-            
-            // Gestisce l'evento di click sul pulsante di login
-            loginButton.addEventListener('click', handleLogin);
-
-            // Permette di fare il login premendo "Invio"
-            passwordInput.addEventListener('keypress', (event) => {
-                if (event.key === 'Enter') {
-                    handleLogin();
-                }
-            });
-
-            // Gestisce l'evento di click sul pulsante di logout
-            logoutButton.addEventListener('click', showLogin);
-        });
-    </script>
-
-</body>
-</html>
-
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Il grande libro della Convivenza</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            color: #1f2937;
-        }
-    </style>
-</head>
-<body class="p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-gray-200">
-        <h1 class="text-3xl sm:text-4xl font-bold text-center text-indigo-800 mb-2">Il grande libro della Convivenza</h1>
-        <p class="text-center text-lg text-gray-600 mb-8">Traccia le uscite mensili per Sara e Giovanni.</p>
-
-        <!-- Sezione di input per le spese -->
         <div class="mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200">
             <h2 class="text-2xl font-semibold mb-6 text-gray-800">Aggiungi Nuova Spesa</h2>
             <form id="expenseForm" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
                 <div>
                     <label for="monthSelect" class="block text-sm font-medium text-gray-700 mb-1">Mese</label>
                     <select id="monthSelect" class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
-                        <!-- Le opzioni del mese verranno generate dinamicamente da JavaScript -->
-                    </select>
+                        </select>
                 </div>
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
@@ -147,18 +66,15 @@
             </form>
         </div>
 
-        <!-- Selettore del mese visualizzato -->
         <div class="mb-8">
             <h2 class="text-2xl font-semibold mb-4 text-gray-800">Visualizza Spese</h2>
             <div class="flex flex-col sm:flex-row sm:items-center gap-4">
                 <label for="displayMonth" class="text-sm font-medium text-gray-700">Seleziona Mese:</label>
                 <select id="displayMonth" class="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
-                    <!-- Opzioni generate dinamicamente -->
-                </select>
+                    </select>
             </div>
         </div>
 
-        <!-- Tabella delle spese -->
         <div class="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
@@ -171,7 +87,6 @@
                     </tr>
                 </thead>
                 <tbody id="expensesTableBody" class="bg-white divide-y divide-gray-200">
-                    <!-- Le righe verranno generate da JavaScript -->
                     <tr id="noDataRow" class="text-center text-gray-500 italic">
                         <td colspan="5" class="px-4 py-4">Nessuna spesa inserita per questo mese.</td>
                     </tr>
@@ -179,7 +94,6 @@
             </table>
         </div>
 
-        <!-- Riepilogo mensile -->
         <div class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
             <h2 class="text-2xl font-semibold mb-4 text-gray-800">Riepilogo Mensile</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
@@ -197,185 +111,194 @@
     </div>
 
     <script>
-        // Funzione per mostrare un messaggio personalizzato, evitando l'uso di alert()
-        function showMessage(message) {
-            const messageBox = document.createElement('div');
-            messageBox.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50';
-            messageBox.innerHTML = `
-                <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full border-2 border-gray-300">
-                    <div class="text-center font-semibold text-lg mb-4 text-gray-800">Avviso</div>
-                    <div class="text-center text-gray-600">${message}</div>
-                    <div class="flex justify-center mt-6">
-                        <button class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-150 ease-in-out">Chiudi</button>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(messageBox);
-            messageBox.querySelector('button').addEventListener('click', () => {
-                document.body.removeChild(messageBox);
-            });
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Variabili e logica del Login ---
+            const users = {
+                'Illuminatibunoni': 'Illunoni'
+            };
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('login-button');
+            const loginContainer = document.getElementById('login-container');
+            const appContainer = document.getElementById('app-container');
+            const errorMessage = document.getElementById('error-message');
+            const logoutButton = document.getElementById('logout-button');
 
-        // Definizione dei nomi dei mesi in italiano
-        const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+            function showApp() {
+                loginContainer.classList.add('hidden');
+                appContainer.classList.remove('hidden');
+                renderAll(); // Chiamata per inizializzare il contenuto dell'app
+            }
 
-        // Elementi del DOM
-        const expenseForm = document.getElementById('expenseForm');
-        const expensesTableBody = document.getElementById('expensesTableBody');
-        const saraTotalElement = document.getElementById('saraTotal');
-        const giovanniTotalElement = document.getElementById('giovanniTotal');
-        const displayMonthSelect = document.getElementById('displayMonth');
-        const monthSelect = document.getElementById('monthSelect');
-        const noDataRow = document.getElementById('noDataRow');
+            function showLogin() {
+                appContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+                errorMessage.classList.add('hidden');
+                usernameInput.value = '';
+                passwordInput.value = '';
+                usernameInput.focus();
+            }
 
-        // Carica i dati delle spese da localStorage
-        let expenses = JSON.parse(localStorage.getItem('sharedExpenses')) || [];
-
-        // Funzione per generare le opzioni dei mesi nel selettore per l'intervallo fisso
-        function populateMonthSelectors() {
-            monthSelect.innerHTML = '';
-            displayMonthSelect.innerHTML = '';
-
-            const startYear = 2025;
-            const startMonth = 8; // Settembre (0-indexed)
-            const endYear = 2050;
-            const endMonth = 11; // Dicembre (0-indexed)
-            
-            for (let year = startYear; year <= endYear; year++) {
-                const monthStart = year === startYear ? startMonth : 0;
-                const monthEnd = year === endYear ? endMonth : 11;
-                for (let month = monthStart; month <= monthEnd; month++) {
-                    const monthString = `${year}-${String(month + 1).padStart(2, '0')}`;
-                    const monthName = monthNames[month];
-                    const option = `<option value="${monthString}">${monthName} ${year}</option>`;
-                    monthSelect.innerHTML += option;
-                    displayMonthSelect.innerHTML += option;
+            function handleLogin() {
+                const username = usernameInput.value;
+                const password = passwordInput.value;
+                if (users[username] === password) {
+                    showApp();
+                } else {
+                    errorMessage.classList.remove('hidden');
                 }
             }
 
-            // Imposta i selettori sul mese corrente se rientra nell'intervallo
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            const currentMonthIndex = currentDate.getMonth();
-            const currentMonthValue = `${currentYear}-${String(currentMonthIndex + 1).padStart(2, '0')}`;
-            
-            const firstMonthValue = `${startYear}-${String(startMonth + 1).padStart(2, '0')}`;
+            loginButton.addEventListener('click', handleLogin);
+            passwordInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+            logoutButton.addEventListener('click', showLogin);
 
-            if (currentMonthValue >= firstMonthValue && currentMonthValue <= `${endYear}-${String(endMonth + 1).padStart(2, '0')}`) {
-                monthSelect.value = currentMonthValue;
-                displayMonthSelect.value = currentMonthValue;
-            } else {
-                 monthSelect.value = firstMonthValue;
-                 displayMonthSelect.value = firstMonthValue;
-            }
-        }
+            // --- Variabili e logica dell'App per le spese ---
+            const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+            const expenseForm = document.getElementById('expenseForm');
+            const expensesTableBody = document.getElementById('expensesTableBody');
+            const saraTotalElement = document.getElementById('saraTotal');
+            const giovanniTotalElement = document.getElementById('giovanniTotal');
+            const displayMonthSelect = document.getElementById('displayMonth');
+            const monthSelect = document.getElementById('monthSelect');
+            const noDataRow = document.getElementById('noDataRow');
+            let expenses = JSON.parse(localStorage.getItem('sharedExpenses')) || [];
 
-        // Funzione per calcolare e aggiornare i totali
-        function updateTotals(month) {
-            const monthlyExpenses = expenses.filter(exp => exp.month === month);
-
-            const saraTotal = monthlyExpenses
-                .filter(exp => exp.name === 'Sara')
-                .reduce((total, exp) => total + exp.amount, 0);
-
-            const giovanniTotal = monthlyExpenses
-                .filter(exp => exp.name === 'Giovanni')
-                .reduce((total, exp) => total + exp.amount, 0);
-
-            saraTotalElement.textContent = `€${saraTotal.toFixed(2)}`;
-            giovanniTotalElement.textContent = `€${giovanniTotal.toFixed(2)}`;
-        }
-
-        // Funzione per renderizzare la tabella delle spese
-        function renderExpenses(month) {
-            const monthlyExpenses = expenses.filter(exp => exp.month === month);
-            expensesTableBody.innerHTML = ''; // Pulisce il corpo della tabella
-
-            if (monthlyExpenses.length === 0) {
-                noDataRow.style.display = 'table-row';
-            } else {
-                noDataRow.style.display = 'none';
-                monthlyExpenses.forEach((exp, index) => {
-                    const row = document.createElement('tr');
-                    row.className = 'hover:bg-gray-50 transition duration-150 ease-in-out';
-                    row.innerHTML = `
-                        <td class="px-4 py-3 whitespace-nowrap">${monthNames[Number(exp.month.split('-')[1]) - 1]} ${exp.month.split('-')[0]}</td>
-                        <td class="px-4 py-3 whitespace-nowrap">${exp.name}</td>
-                        <td class="px-4 py-3">${exp.type}</td>
-                        <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">€${exp.amount.toFixed(2)}</td>
-                        <td class="px-4 py-3 whitespace-nowrap">
-                            <button class="delete-btn text-red-600 hover:text-red-800 transition duration-150 ease-in-out" data-index="${index}">Elimina</button>
-                        </td>
-                    `;
-                    expensesTableBody.appendChild(row);
+            function showMessage(message) {
+                const messageBox = document.createElement('div');
+                messageBox.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50';
+                messageBox.innerHTML = `
+                    <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full border-2 border-gray-300">
+                        <div class="text-center font-semibold text-lg mb-4 text-gray-800">Avviso</div>
+                        <div class="text-center text-gray-600">${message}</div>
+                        <div class="flex justify-center mt-6">
+                            <button class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-150 ease-in-out">Chiudi</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(messageBox);
+                messageBox.querySelector('button').addEventListener('click', () => {
+                    document.body.removeChild(messageBox);
                 });
             }
-        }
 
-        // Funzione per salvare le spese in localStorage
-        function saveExpenses() {
-            localStorage.setItem('sharedExpenses', JSON.stringify(expenses));
-            renderAll();
-        }
-
-        // Gestisce l'invio del form
-        expenseForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const newExpense = {
-                month: monthSelect.value,
-                name: document.getElementById('name').value,
-                type: document.getElementById('type').value,
-                amount: parseFloat(document.getElementById('amount').value),
-            };
-
-            expenses.push(newExpense);
-            saveExpenses();
-            expenseForm.reset();
-            
-            // Imposta il selettore di visualizzazione sul mese appena inserito
-            displayMonthSelect.value = newExpense.month;
-        });
-
-        // Gestisce l'eliminazione di una spesa
-        expensesTableBody.addEventListener('click', (e) => {
-            if (e.target.classList.contains('delete-btn')) {
-                const index = e.target.dataset.index;
-                const monthToDeleteFrom = displayMonthSelect.value;
-                
-                // Trova l'indice corretto nell'array principale basandosi sul mese visualizzato
-                const monthlyExpenses = expenses.filter(exp => exp.month === monthToDeleteFrom);
-                const itemToDelete = monthlyExpenses[index];
-                const mainIndex = expenses.findIndex(exp => exp === itemToDelete);
-
-                if (mainIndex > -1) {
-                    expenses.splice(mainIndex, 1);
-                    saveExpenses();
+            function populateMonthSelectors() {
+                monthSelect.innerHTML = '';
+                displayMonthSelect.innerHTML = '';
+                const startYear = 2025;
+                const startMonth = 8;
+                const endYear = 2050;
+                const endMonth = 11;
+                for (let year = startYear; year <= endYear; year++) {
+                    const monthStart = year === startYear ? startMonth : 0;
+                    const monthEnd = year === endYear ? endMonth : 11;
+                    for (let month = monthStart; month <= monthEnd; month++) {
+                        const monthString = `${year}-${String(month + 1).padStart(2, '0')}`;
+                        const monthName = monthNames[month];
+                        const option = `<option value="${monthString}">${monthName} ${year}</option>`;
+                        monthSelect.innerHTML += option;
+                        displayMonthSelect.innerHTML += option;
+                    }
+                }
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                const currentMonthIndex = currentDate.getMonth();
+                const currentMonthValue = `${currentYear}-${String(currentMonthIndex + 1).padStart(2, '0')}`;
+                const firstMonthValue = `${startYear}-${String(startMonth + 1).padStart(2, '0')}`;
+                if (currentMonthValue >= firstMonthValue && currentMonthValue <= `${endYear}-${String(endMonth + 1).padStart(2, '0')}`) {
+                    monthSelect.value = currentMonthValue;
+                    displayMonthSelect.value = currentMonthValue;
                 } else {
-                    showMessage("Errore durante l'eliminazione della spesa.");
+                    monthSelect.value = firstMonthValue;
+                    displayMonthSelect.value = firstMonthValue;
                 }
             }
-        });
-        
-        // Gestisce il cambio di mese nel selettore di visualizzazione
-        displayMonthSelect.addEventListener('change', () => {
-            const selectedMonth = displayMonthSelect.value;
-            renderExpenses(selectedMonth);
-            updateTotals(selectedMonth);
-        });
 
-        // Funzione principale che aggiorna tutto
-        function renderAll() {
-            populateMonthSelectors();
-            const selectedMonth = displayMonthSelect.value;
-            renderExpenses(selectedMonth);
-            updateTotals(selectedMonth);
-        }
+            function updateTotals(month) {
+                const monthlyExpenses = expenses.filter(exp => exp.month === month);
+                const saraTotal = monthlyExpenses.filter(exp => exp.name === 'Sara').reduce((total, exp) => total + exp.amount, 0);
+                const giovanniTotal = monthlyExpenses.filter(exp => exp.name === 'Giovanni').reduce((total, exp) => total + exp.amount, 0);
+                saraTotalElement.textContent = `€${saraTotal.toFixed(2)}`;
+                giovanniTotalElement.textContent = `€${giovanniTotal.toFixed(2)}`;
+            }
 
-        // Inizializza l'app al caricamento della pagina
-        document.addEventListener('DOMContentLoaded', () => {
-            renderAll();
+            function renderExpenses(month) {
+                const monthlyExpenses = expenses.filter(exp => exp.month === month);
+                expensesTableBody.innerHTML = '';
+                if (monthlyExpenses.length === 0) {
+                    noDataRow.style.display = 'table-row';
+                } else {
+                    noDataRow.style.display = 'none';
+                    monthlyExpenses.forEach((exp, index) => {
+                        const row = document.createElement('tr');
+                        row.className = 'hover:bg-gray-50 transition duration-150 ease-in-out';
+                        row.innerHTML = `
+                            <td class="px-4 py-3 whitespace-nowrap">${monthNames[Number(exp.month.split('-')[1]) - 1]} ${exp.month.split('-')[0]}</td>
+                            <td class="px-4 py-3 whitespace-nowrap">${exp.name}</td>
+                            <td class="px-4 py-3">${exp.type}</td>
+                            <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">€${exp.amount.toFixed(2)}</td>
+                            <td class="px-4 py-3 whitespace-nowrap">
+                                <button class="delete-btn text-red-600 hover:text-red-800 transition duration-150 ease-in-out" data-index="${index}">Elimina</button>
+                            </td>
+                        `;
+                        expensesTableBody.appendChild(row);
+                    });
+                }
+            }
+
+            function saveExpenses() {
+                localStorage.setItem('sharedExpenses', JSON.stringify(expenses));
+                renderAll();
+            }
+
+            expenseForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const newExpense = {
+                    month: monthSelect.value,
+                    name: document.getElementById('name').value,
+                    type: document.getElementById('type').value,
+                    amount: parseFloat(document.getElementById('amount').value),
+                };
+                expenses.push(newExpense);
+                saveExpenses();
+                expenseForm.reset();
+                displayMonthSelect.value = newExpense.month;
+            });
+
+            expensesTableBody.addEventListener('click', (e) => {
+                if (e.target.classList.contains('delete-btn')) {
+                    const index = e.target.dataset.index;
+                    const monthToDeleteFrom = displayMonthSelect.value;
+                    const monthlyExpenses = expenses.filter(exp => exp.month === monthToDeleteFrom);
+                    const itemToDelete = monthlyExpenses[index];
+                    const mainIndex = expenses.findIndex(exp => exp === itemToDelete);
+                    if (mainIndex > -1) {
+                        expenses.splice(mainIndex, 1);
+                        saveExpenses();
+                    } else {
+                        showMessage("Errore durante l'eliminazione della spesa.");
+                    }
+                }
+            });
+
+            displayMonthSelect.addEventListener('change', () => {
+                const selectedMonth = displayMonthSelect.value;
+                renderExpenses(selectedMonth);
+                updateTotals(selectedMonth);
+            });
+
+            function renderAll() {
+                populateMonthSelectors();
+                const selectedMonth = displayMonthSelect.value;
+                renderExpenses(selectedMonth);
+                updateTotals(selectedMonth);
+            }
         });
     </script>
+
 </body>
 </html>
