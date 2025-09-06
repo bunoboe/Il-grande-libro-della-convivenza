@@ -1,0 +1,20 @@
+const users = {
+  'utente1': 'pass1',
+  'utente2': 'pass2'
+};
+
+function login() {
+  const username = prompt('Inserisci il nome utente:');
+  const password = prompt('Inserisci la password:');
+
+  if (users[username] === password) {
+    alert('Accesso riuscito!');
+    // Mostra il contenuto dell'app
+  } else {
+    alert('Nome utente o password errati.');
+    // Reindirizza o nascondi il contenuto
+  }
+}
+
+// Chiama la funzione di login all'avvio
+login();
