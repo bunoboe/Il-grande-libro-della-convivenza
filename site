@@ -1,0 +1,273 @@
+!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spese Condivise - Sara & Giovanni</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-gray-200">
+        <h1 class="text-3xl sm:text-4xl font-bold text-center text-indigo-800 mb-2">Spese Condivise</h1>
+        <p class="text-center text-lg text-gray-600 mb-8">Traccia le uscite mensili per Sara e Giovanni.</p>
+
+        <!-- Sezione di input per le spese -->
+        <div class="mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200">
+            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Aggiungi Nuova Spesa</h2>
+            <form id="expenseForm" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                <div>
+                    <label for="monthSelect" class="block text-sm font-medium text-gray-700 mb-1">Mese</label>
+                    <select id="monthSelect" class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
+                        <!-- Le opzioni del mese verranno generate dinamicamente da JavaScript -->
+                    </select>
+                </div>
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                    <select id="name" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
+                        <option value="Sara">Sara</option>
+                        <option value="Giovanni">Giovanni</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Tipo di Uscita</label>
+                    <input type="text" id="type" required placeholder="Es. Affitto, spesa" class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+                <div>
+                    <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Importo (€)</label>
+                    <input type="number" id="amount" required min="0.01" step="0.01" placeholder="Es. 100.50" class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+                <button type="submit" class="sm:col-span-2 lg:col-span-4 w-full px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition duration-150 ease-in-out">Aggiungi Spesa</button>
+            </form>
+        </div>
+
+        <!-- Selettore del mese visualizzato -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Visualizza Spese</h2>
+            <div class="flex flex-col sm:flex-row sm:items-center gap-4">
+                <label for="displayMonth" class="text-sm font-medium text-gray-700">Seleziona Mese:</label>
+                <select id="displayMonth" class="w-full sm:w-auto px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 ease-in-out">
+                    <!-- Opzioni generate dinamicamente -->
+                </select>
+            </div>
+        </div>
+
+        <!-- Tabella delle spese -->
+        <div class="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mese</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo di Uscita</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Importo (€)</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
+                    </tr>
+                </thead>
+                <tbody id="expensesTableBody" class="bg-white divide-y divide-gray-200">
+                    <!-- Le righe verranno generate da JavaScript -->
+                    <tr id="noDataRow" class="text-center text-gray-500 italic">
+                        <td colspan="5" class="px-4 py-4">Nessuna spesa inserita per questo mese.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Riepilogo mensile -->
+        <div class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-200">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Riepilogo Mensile</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
+                <div class="p-4 bg-white rounded-lg shadow border border-gray-200">
+                    <h3 class="font-medium text-lg text-gray-700">Totale Spese Sara</h3>
+                    <p id="saraTotal" class="text-3xl font-bold text-green-600 mt-2">€0.00</p>
+                </div>
+                <div class="p-4 bg-white rounded-lg shadow border border-gray-200">
+                    <h3 class="font-medium text-lg text-gray-700">Totale Spese Giovanni</h3>
+                    <p id="giovanniTotal" class="text-3xl font-bold text-blue-600 mt-2">€0.00</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Funzione per mostrare un messaggio personalizzato, evitando l'uso di alert()
+        function showMessage(message) {
+            const messageBox = document.createElement('div');
+            messageBox.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center p-4 z-50';
+            messageBox.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full border-2 border-gray-300">
+                    <div class="text-center font-semibold text-lg mb-4 text-gray-800">Avviso</div>
+                    <div class="text-center text-gray-600">${message}</div>
+                    <div class="flex justify-center mt-6">
+                        <button class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition duration-150 ease-in-out">Chiudi</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(messageBox);
+            messageBox.querySelector('button').addEventListener('click', () => {
+                document.body.removeChild(messageBox);
+            });
+        }
+
+        // Definizione dei nomi dei mesi in italiano
+        const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
+
+        // Elementi del DOM
+        const expenseForm = document.getElementById('expenseForm');
+        const expensesTableBody = document.getElementById('expensesTableBody');
+        const saraTotalElement = document.getElementById('saraTotal');
+        const giovanniTotalElement = document.getElementById('giovanniTotal');
+        const displayMonthSelect = document.getElementById('displayMonth');
+        const monthSelect = document.getElementById('monthSelect');
+        const noDataRow = document.getElementById('noDataRow');
+
+        // Carica i dati delle spese da localStorage
+        let expenses = JSON.parse(localStorage.getItem('sharedExpenses')) || [];
+
+        // Funzione per generare le opzioni dei mesi nel selettore
+        function populateMonthSelectors() {
+            // Ottiene un array di mesi unici dai dati delle spese
+            const uniqueMonths = [...new Set(expenses.map(exp => exp.month))];
+            
+            // Aggiunge il mese corrente se non è già presente
+            const currentMonth = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
+            if (!uniqueMonths.includes(currentMonth)) {
+                uniqueMonths.push(currentMonth);
+            }
+            
+            // Ordina i mesi in ordine cronologico
+            uniqueMonths.sort();
+
+            // Svuota e ripopola i selettori
+            monthSelect.innerHTML = '';
+            displayMonthSelect.innerHTML = '';
+
+            uniqueMonths.forEach(month => {
+                const [year, monthIndex] = month.split('-').map(Number);
+                const monthName = monthNames[monthIndex - 1];
+                const option = `<option value="${month}">${monthName} ${year}</option>`;
+                monthSelect.innerHTML += option;
+                displayMonthSelect.innerHTML += option;
+            });
+            
+            // Imposta il selettore di visualizzazione sul mese corrente
+            displayMonthSelect.value = currentMonth;
+        }
+
+        // Funzione per calcolare e aggiornare i totali
+        function updateTotals(month) {
+            const monthlyExpenses = expenses.filter(exp => exp.month === month);
+
+            const saraTotal = monthlyExpenses
+                .filter(exp => exp.name === 'Sara')
+                .reduce((total, exp) => total + exp.amount, 0);
+
+            const giovanniTotal = monthlyExpenses
+                .filter(exp => exp.name === 'Giovanni')
+                .reduce((total, exp) => total + exp.amount, 0);
+
+            saraTotalElement.textContent = `€${saraTotal.toFixed(2)}`;
+            giovanniTotalElement.textContent = `€${giovanniTotal.toFixed(2)}`;
+        }
+
+        // Funzione per renderizzare la tabella delle spese
+        function renderExpenses(month) {
+            const monthlyExpenses = expenses.filter(exp => exp.month === month);
+            expensesTableBody.innerHTML = ''; // Pulisce il corpo della tabella
+
+            if (monthlyExpenses.length === 0) {
+                noDataRow.style.display = 'table-row';
+            } else {
+                noDataRow.style.display = 'none';
+                monthlyExpenses.forEach((exp, index) => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50 transition duration-150 ease-in-out';
+                    row.innerHTML = `
+                        <td class="px-4 py-3 whitespace-nowrap">${monthNames[Number(exp.month.split('-')[1]) - 1]} ${exp.month.split('-')[0]}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">${exp.name}</td>
+                        <td class="px-4 py-3">${exp.type}</td>
+                        <td class="px-4 py-3 whitespace-nowrap font-medium text-gray-900">€${exp.amount.toFixed(2)}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">
+                            <button class="delete-btn text-red-600 hover:text-red-800 transition duration-150 ease-in-out" data-index="${index}">Elimina</button>
+                        </td>
+                    `;
+                    expensesTableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Funzione per salvare le spese in localStorage
+        function saveExpenses() {
+            localStorage.setItem('sharedExpenses', JSON.stringify(expenses));
+            renderAll();
+        }
+
+        // Gestisce l'invio del form
+        expenseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newExpense = {
+                month: monthSelect.value,
+                name: document.getElementById('name').value,
+                type: document.getElementById('type').value,
+                amount: parseFloat(document.getElementById('amount').value),
+            };
+
+            expenses.push(newExpense);
+            saveExpenses();
+            expenseForm.reset();
+            
+            // Imposta il selettore di visualizzazione sul mese appena inserito
+            displayMonthSelect.value = newExpense.month;
+        });
+
+        // Gestisce l'eliminazione di una spesa
+        expensesTableBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('delete-btn')) {
+                const index = e.target.dataset.index;
+                const monthToDeleteFrom = displayMonthSelect.value;
+                
+                // Trova l'indice corretto nell'array principale basandosi sul mese visualizzato
+                const monthlyExpenses = expenses.filter(exp => exp.month === monthToDeleteFrom);
+                const itemToDelete = monthlyExpenses[index];
+                const mainIndex = expenses.findIndex(exp => exp === itemToDelete);
+
+                if (mainIndex > -1) {
+                    expenses.splice(mainIndex, 1);
+                    saveExpenses();
+                } else {
+                    showMessage("Errore durante l'eliminazione della spesa.");
+                }
+            }
+        });
+        
+        // Gestisce il cambio di mese nel selettore di visualizzazione
+        displayMonthSelect.addEventListener('change', () => {
+            const selectedMonth = displayMonthSelect.value;
+            renderExpenses(selectedMonth);
+            updateTotals(selectedMonth);
+        });
+
+        // Funzione principale che aggiorna tutto
+        function renderAll() {
+            populateMonthSelectors();
+            const selectedMonth = displayMonthSelect.value;
+            renderExpenses(selectedMonth);
+            updateTotals(selectedMonth);
+        }
+
+        // Inizializza l'app al caricamento della pagina
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAll();
+        });
+    </script>
+</body>
+</html>
