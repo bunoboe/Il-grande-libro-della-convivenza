@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spese Condivise - Sara & Giovanni</title>
+    <title>Il grande libro della Convivenza</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -16,7 +16,7 @@
 </head>
 <body class="p-4 sm:p-8">
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6 sm:p-10 border border-gray-200">
-        <h1 class="text-3xl sm:text-4xl font-bold text-center text-indigo-800 mb-2">Spese Condivise</h1>
+        <h1 class="text-3xl sm:text-4xl font-bold text-center text-indigo-800 mb-2">Il grande libro della Convivenza</h1>
         <p class="text-center text-lg text-gray-600 mb-8">Traccia le uscite mensili per Sara e Giovanni.</p>
 
         <!-- Sezione di input per le spese -->
@@ -132,34 +132,43 @@
         // Carica i dati delle spese da localStorage
         let expenses = JSON.parse(localStorage.getItem('sharedExpenses')) || [];
 
-        // Funzione per generare le opzioni dei mesi nel selettore
+        // Funzione per generare le opzioni dei mesi nel selettore per l'intervallo fisso
         function populateMonthSelectors() {
-            // Ottiene un array di mesi unici dai dati delle spese
-            const uniqueMonths = [...new Set(expenses.map(exp => exp.month))];
-            
-            // Aggiunge il mese corrente se non è già presente
-            const currentMonth = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`;
-            if (!uniqueMonths.includes(currentMonth)) {
-                uniqueMonths.push(currentMonth);
-            }
-            
-            // Ordina i mesi in ordine cronologico
-            uniqueMonths.sort();
-
-            // Svuota e ripopola i selettori
             monthSelect.innerHTML = '';
             displayMonthSelect.innerHTML = '';
 
-            uniqueMonths.forEach(month => {
-                const [year, monthIndex] = month.split('-').map(Number);
-                const monthName = monthNames[monthIndex - 1];
-                const option = `<option value="${month}">${monthName} ${year}</option>`;
-                monthSelect.innerHTML += option;
-                displayMonthSelect.innerHTML += option;
-            });
+            const startYear = 2025;
+            const startMonth = 8; // Settembre (0-indexed)
+            const endYear = 2050;
+            const endMonth = 11; // Dicembre (0-indexed)
             
-            // Imposta il selettore di visualizzazione sul mese corrente
-            displayMonthSelect.value = currentMonth;
+            for (let year = startYear; year <= endYear; year++) {
+                const monthStart = year === startYear ? startMonth : 0;
+                const monthEnd = year === endYear ? endMonth : 11;
+                for (let month = monthStart; month <= monthEnd; month++) {
+                    const monthString = `${year}-${String(month + 1).padStart(2, '0')}`;
+                    const monthName = monthNames[month];
+                    const option = `<option value="${monthString}">${monthName} ${year}</option>`;
+                    monthSelect.innerHTML += option;
+                    displayMonthSelect.innerHTML += option;
+                }
+            }
+
+            // Imposta i selettori sul mese corrente se rientra nell'intervallo
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonthIndex = currentDate.getMonth();
+            const currentMonthValue = `${currentYear}-${String(currentMonthIndex + 1).padStart(2, '0')}`;
+            
+            const firstMonthValue = `${startYear}-${String(startMonth + 1).padStart(2, '0')}`;
+
+            if (currentMonthValue >= firstMonthValue && currentMonthValue <= `${endYear}-${String(endMonth + 1).padStart(2, '0')}`) {
+                monthSelect.value = currentMonthValue;
+                displayMonthSelect.value = currentMonthValue;
+            } else {
+                 monthSelect.value = firstMonthValue;
+                 displayMonthSelect.value = firstMonthValue;
+            }
         }
 
         // Funzione per calcolare e aggiornare i totali
